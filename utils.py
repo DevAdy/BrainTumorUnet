@@ -62,7 +62,12 @@ def check_accuracy(loader, model, device="cuda"):
     with torch.no_grad():
         for x,y in loader:
             x = x.to(device)
-            y = y.to(device).unsqueeze(1)
+            y = y.to(device)
+            if x.dim() == 3:
+                x = x.unsqueeze(1)
+            if y.dim() == 3:
+                y = y.unsqueeze(1)
+
             preds = torch.sigmoid(model(x))
             preds = (preds > 0.5).float()
             num_correct += (preds == y).sum()
@@ -76,11 +81,13 @@ def check_accuracy(loader, model, device="cuda"):
     model.train()
 
 def save_predictions_as_imgs(
-        loader,model,folder=r"savedimgs/path",device="cuda"
+        loader,model,folder=r"C:\Users\Aditya B\OneDrive\Desktop\BrainTumorUnEt\Data\sav_imgs",device="cuda"
 ):
     model.eval()
     for idx, (x, y) in enumerate(loader):
         x = x.to(device=device)
+        if x.dim() == 3:
+            x = x.unsqueeze(1)
         with torch.no_grad():
             preds = torch.sigmoid(model(x))
             preds = (preds > 0.5).float()

@@ -23,15 +23,20 @@ IMAGE_HEIGHT = 240 #1280 originally #160
 IMAGE_WIDTH = 240 #1918  originally #240
 PIN_MEMORY = True
 LOAD_MODEL = False
-TRAIN_IMG_DIR = r"training/imgs/path"
-TRAIN_MASK_DIR = r"mask/imgs/path"
-VAL_IMG_DIR = r"val_imgs/path"
-VAL_MASK_DIR = r"val_masks/path"
+TRAIN_IMG_DIR = r"C:\Users\Aditya B\OneDrive\Desktop\BrainTumorUnEt\Data\train_imgs"
+TRAIN_MASK_DIR = r"C:\Users\Aditya B\OneDrive\Desktop\BrainTumorUnEt\Data\train_masks"
+VAL_IMG_DIR = r"C:\Users\Aditya B\OneDrive\Desktop\BrainTumorUnEt\Data\val_imgs"
+VAL_MASK_DIR = r"C:\Users\Aditya B\OneDrive\Desktop\BrainTumorUnEt\Data\val_masks"
 
 def train_fn(loader,model,optimizer,loss_fn,scaler):
     loop = tqdm(loader)
     for batch_idx, (data, targets) in enumerate(loop):
         data, targets = data.to(device=DEVICE), targets.float().unsqueeze(1).to(device=DEVICE)
+
+        if data.dim() == 3:
+            data = data.unsqueeze(1)
+        if targets.dim() == 3:
+            targets = targets.unsqueeze(1)
 
         #forward
         with torch.cuda.amp.autocast():
@@ -57,7 +62,7 @@ def main():
             A.Normalize(
                 mean=[0.0],
                 std=[1.0],
-                max_pixel_value=1.0,
+                max_pixel_value=255.0,
             ),
             ToTensorV2(),
         ],
@@ -69,10 +74,11 @@ def main():
             A.Normalize(
                 mean=[0.0],
                 std=[1.0],
-                max_pixel_value=1.0,
+                max_pixel_value=255.0,
             ),
             ToTensorV2(),
         ],
+
     )
 
     model = UNET(in_channels=1,out_channels=1).to(DEVICE)
@@ -110,7 +116,7 @@ def main():
         check_accuracy(val_loader,model,device=DEVICE)
         #print some examples to a folder
         save_predictions_as_imgs(
-            val_loader, model, device=DEVICE, folder=r"savedimags/path",
+            val_loader, model, device=DEVICE, folder=r"C:\Users\Aditya B\OneDrive\Desktop\BrainTumorUnEt\Data\sav_imgs",
         )
 
 if __name__ == "__main__":
