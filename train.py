@@ -23,10 +23,10 @@ IMAGE_HEIGHT = 240 #1280 originally #160
 IMAGE_WIDTH = 240 #1918  originally #240
 PIN_MEMORY = True
 LOAD_MODEL = False
-TRAIN_IMG_DIR = r"C:\Users\Aditya B\OneDrive\Desktop\BrainTumorUnEt\Data\train_imgs"
-TRAIN_MASK_DIR = r"C:\Users\Aditya B\OneDrive\Desktop\BrainTumorUnEt\Data\train_masks"
-VAL_IMG_DIR = r"C:\Users\Aditya B\OneDrive\Desktop\BrainTumorUnEt\Data\val_imgs"
-VAL_MASK_DIR = r"C:\Users\Aditya B\OneDrive\Desktop\BrainTumorUnEt\Data\val_masks"
+TRAIN_IMG_DIR = r"Path/to/your/trainimgs"
+TRAIN_MASK_DIR = r"Path/to/your/trainmasks"
+VAL_IMG_DIR = r"pth/to/your/val_imgs"
+VAL_MASK_DIR = r"path/to/your/val_masks"
 
 def train_fn(loader,model,optimizer,loss_fn,scaler):
     loop = tqdm(loader)
