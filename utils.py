@@ -81,7 +81,7 @@ def check_accuracy(loader, model, device="cuda"):
     model.train()
 
 def save_predictions_as_imgs(
-        loader,model,folder=r"C:\Users\Aditya B\OneDrive\Desktop\BrainTumorUnEt\Data\sav_imgs",device="cuda"
+        loader,model,folder=r"path/to/your/sav_imgs",device="cuda"
 ):
     model.eval()
     for idx, (x, y) in enumerate(loader):
