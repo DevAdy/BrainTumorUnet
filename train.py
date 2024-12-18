@@ -116,7 +116,7 @@ def main():
         check_accuracy(val_loader,model,device=DEVICE)
         #print some examples to a folder
         save_predictions_as_imgs(
-            val_loader, model, device=DEVICE, folder=r"C:\Users\Aditya B\OneDrive\Desktop\BrainTumorUnEt\Data\sav_imgs",
+            val_loader, model, device=DEVICE, folder=r"Path/to/your/sav_imgs",
         )
 
 if __name__ == "__main__":
